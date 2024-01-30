@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        *{
+            font-size: 1.2rem;
+        }
+        body{
+            display: flex;
+            background-color: #eaf0ce;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .calculator{
+            width : 80vh;
+            height: 70vh;
+            position: absolute;
+            top : 15vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button{
+            width : 20vh;
+            color : white;
+            background-color: black;
+            height: 100%;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        #zero{
+            width: 41vh;
+        }
+        button:hover{
+            background-color: #eaf0ce;
+            color: black;
+            font-weight: bolder;
+        }
+        input  {
+            color : white;
+            background-color: black;
+            height: 100%;
+            cursor: pointer;
+            border-radius: 10px;
+            width: 81vh;
+            text-align: end;
+            margin-bottom: 2vh;
+            padding-right: 2vh;
+        }
+        table{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <table>
+            <tr>
+                <td colspan="4"><input type="text" id="display" value="0" readonly></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="clearDisplay()" id="ac">AC</button></td>
+                <td><button class="button" onclick="deleteLastDigit()" id="del">DEL</button></td>
+                <td><button class="button" onclick="appendValue('%')" id="percentage">%</button></td>
+                <td><button class="button" onclick="appendValue('/')" id="div">/</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="appendValue('7')" id="seven">7</button></td>
+                <td><button class="button" onclick="appendValue('8')" id="eight">8</button></td>
+                <td><button class="button" onclick="appendValue('9')" id="nine">9</button></td>
+                <td><button class="button" onclick="appendValue('*')" id="mul">x</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="appendValue('4')" id="four">4</button></td>
+                <td><button class="button" onclick="appendValue('5')" id="five">5</button></td>
+                <td><button class="button" onclick="appendValue('6')" id="six">6</button></td>
+                <td><button class="button" onclick="appendValue('-')" id="sub">-</button></td>
+            </tr>
+            <tr>
+                <td><button class="button" onclick="appendValue('1')" id="one">1</button></td>
+                <td><button class="button" onclick="appendValue('2')" id="two">2</button></td>
+                <td><button class="button" onclick="appendValue('3')" id="three">3</button></td>
+                <td><button class="button" onclick="appendValue('+')" id="add">+</button></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="button" onclick="appendValue('0')" id="zero">0</button></td>
+                <td><button class="button" onclick="appendValue('.')" id="decimal">.</button></td>
+                <td><button class="button" onclick="calculate()" id="equal">=</button><td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var expression = ''; 
+        function appendValue(value){
+            expression += value;
+            updateDisplay();
+        }
+
+        function calculate(){
+            try{
+                var result = eval(expression);
+                document.getElementById('display').value = result;
+                expression = '';
+            }
+            catch(error){
+                document.getElementById('display').value = 'ERROR';
+                expression = '';
+            }
+        }
+
+        function updateDisplay(){
+            document.getElementById('display').value = expression;
+        }
+
+        function deleteLastDigit(){
+            var currentValue = document.getElementById('display').value;
+            expression = currentValue.slice(0, -1);
+            if(expression.length == 0)
+                document.getElementById('display').value = '0';
+            else
+                document.getElementById('display').value = expression;
+        }
+
+        function clearDisplay(){
+            expression = '';
+            document.getElementById('display').value = '0';
+        }
+    </script>
+</body>
+</html>
